@@ -15,9 +15,10 @@ Jonathan Hyun
 FULLY CRUD
 FULL STACK PROGRAMMER WOOOO
 
-Tracks Happiness/Mood each day,
-Stores value into SQL Database by date,
-Not sure what I'm gunna do nextBut probably graphs and statistics and graphics and stuff.
+Tracks Happiness/Mood each day.
+Stores value into SQL Database by date.
+Not sure what I'm gunna do next.
+But probably graphs and statistics and graphics and stuff.
 
 Might make mobile eh?
 Might ditch SQL cuz i hate it and just use jsons eh?

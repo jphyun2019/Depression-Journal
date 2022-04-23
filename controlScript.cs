@@ -22,8 +22,11 @@ public class controlScript : MonoBehaviour
     public List<Entry> entries = new List<Entry>();
 
     public TextMeshProUGUI dayText;
+    public TextMeshProUGUI monthText;
     public TextMeshProUGUI valText;
-    public TextMeshProUGUI notesText;
+    public TMP_InputField notesText;
+    public sliderScr slider;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -38,7 +41,8 @@ public class controlScript : MonoBehaviour
         selectedDate = DateTime.Now;
         dayText.SetText(selectedDate.ToString("dddd dd"));
         valText.SetText(searchfor(selectedDate).Item1.ToString());
-        notesText.SetText(searchfor(selectedDate).Item2.ToString());
+        notesText.text = (searchfor(selectedDate).Item2.ToString());
+        slider.setValue((int)(searchfor(selectedDate).Item1 * 2f));
 
 
     }
@@ -99,8 +103,8 @@ public class controlScript : MonoBehaviour
     public (float, string) searchfor(DateTime date)
     {
         sqlscr.read();
-        float val = -1f;
-        string notes = "Enter Notes Here";
+        float val = 0f;
+        string notes = "";
 
 
         foreach (Entry e in entries)
@@ -117,9 +121,9 @@ public class controlScript : MonoBehaviour
 
     public void add()
     {
-        sqlscr.add(selectedDate, 2, "testinggg");
-        valText.SetText(searchfor(selectedDate).Item1.ToString());
-        notesText.SetText(searchfor(selectedDate).Item2.ToString());
+        sqlscr.add(selectedDate, slider.getValue(), notesText.text);
+        valText.SetText(searchfor(selectedDate).Item1.ToString().Equals("0")? "?": searchfor(selectedDate).Item1.ToString());
+        notesText.text = (searchfor(selectedDate).Item2.ToString());
     }
 
     public void navBack()
@@ -127,16 +131,20 @@ public class controlScript : MonoBehaviour
         selectedDate = selectedDate.Subtract(TimeSpan.FromDays(1));
         Debug.Log(selectedDate.ToString());
         dayText.SetText(selectedDate.ToString("dddd dd"));
-        valText.SetText(searchfor(selectedDate).Item1.ToString());
-        notesText.SetText(searchfor(selectedDate).Item2.ToString());
+        monthText.SetText(selectedDate.ToString("MMMM"));
+        valText.SetText(searchfor(selectedDate).Item1.ToString().Equals("0") ? "?" : searchfor(selectedDate).Item1.ToString());
+        notesText.text = (searchfor(selectedDate).Item2.ToString());
+        slider.setValue((int)(searchfor(selectedDate).Item1 * 2f));
     }
     public void navForwards()
     {
         selectedDate = selectedDate.AddDays(1);
         Debug.Log(selectedDate.ToString());
         dayText.SetText(selectedDate.ToString("dddd dd"));
-        valText.SetText(searchfor(selectedDate).Item1.ToString());
-        notesText.SetText(searchfor(selectedDate).Item2.ToString());
+        monthText.SetText(selectedDate.ToString("MMMM"));
+        valText.SetText(searchfor(selectedDate).Item1.ToString().Equals("0") ? "?" : searchfor(selectedDate).Item1.ToString());
+        notesText.text = (searchfor(selectedDate).Item2.ToString());
+        slider.setValue((int)(searchfor(selectedDate).Item1*2f));
     }
 
 

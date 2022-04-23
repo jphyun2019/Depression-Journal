@@ -41,21 +41,11 @@ public class sqlTest : MonoBehaviour
 
 
 
-
-
-        IDbCommand cmnd = dbcon.CreateCommand();
-
-
-        string additem = "INSERT INTO maintable (date,val,notes,dateSince2022) VALUES (1650582659,3,'hello',110)";
-
-        cmnd.CommandText = additem;
-        cmnd.ExecuteNonQuery();
-
         dbcon.Close();
     }
 
 
-    public void add(DateTime date, int val, string notes)
+    public void add(DateTime date, float val, string notes)
     {
         string connection = "URI=file:" + Application.persistentDataPath + "/My_Database";
         IDbConnection dbcon = new SqliteConnection(connection);
@@ -116,7 +106,7 @@ public class sqlTest : MonoBehaviour
 
         while (reader.Read())
         {
-            Entry newEntry = new Entry(new DateTime(1970, 1, 1).AddSeconds(Int32.Parse(reader[0].ToString())), (float)Int32.Parse(reader[1].ToString()), reader[2].ToString());
+            Entry newEntry = new Entry(new DateTime(1970, 1, 1).AddSeconds(Int32.Parse(reader[0].ToString())), float.Parse(reader[1].ToString()), reader[2].ToString());
             Controller.entries.Add(newEntry);
             newEntry.printEntry();
         }

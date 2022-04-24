@@ -26,15 +26,23 @@ public class controlScript : MonoBehaviour
     public TextMeshProUGUI valText;
     public TMP_InputField notesText;
     public sliderScr slider;
-    
+
+
+    public GameObject dayPage;
+    public GameObject calPage;
+    public GameObject graphPage;
+    public GameObject statsPage;
 
     // Start is called before the first frame update
     void Start()
     {
         Application.targetFrameRate = 60;
         //newCampos = new Vector3(0, 6.5f, 0);
+
+
         newCampos = new Vector3(-1.5f, 2.4f, -1.3f);
         newCamrot = new Vector3(90, 0, 0);
+        moveTo(3);
         newCamFOV = 60;
         sqlscr.sqlStart();
 
@@ -50,34 +58,30 @@ public class controlScript : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (Input.GetKeyDown("1"))
-        {
-            newCampos = new Vector3(-1.5f, 2.4f, 1.3f);
-            moveTo(1);
-        }
-        else if (Input.GetKeyDown("2"))
-        {
-            newCampos = new Vector3(1.5f, 2.4f, 1.3f);
-            moveTo(2);
-        }
-        else if (Input.GetKeyDown("3"))
-        {
-            newCampos = new Vector3(-1.5f, 2.4f, -1.3f);
-            moveTo(3);
-        }
-        else if (Input.GetKeyDown("4"))
-        {
-            newCampos = new Vector3(1.5f, 2.4f, -1.3f);
-            moveTo(4);
-        }
-
-
         if(animCounter > 0)
         {
             animCounter--;
         }
         if(animCounter == 1)
         {
+            switch (mode)
+            {
+                case 1:
+                    calPage.SetActive(true);
+                    break;
+                case 2:
+                    graphPage.SetActive(true);
+                    break;
+                case 3:
+                    dayPage.SetActive(true);
+                    break;
+                case 4:
+                    statsPage.SetActive(true);
+                    break;
+
+            }
+
+
         }
         if (newCampos != cam.transform.position)
         {
@@ -93,6 +97,30 @@ public class controlScript : MonoBehaviour
         }
 
     }
+
+    public void moveDay()
+    {
+        newCampos = new Vector3(-1.5f, 2.4f, -1.3f);
+        moveTo(3);
+    }
+    public void moveCal()
+    {
+        newCampos = new Vector3(-1.5f, 2.4f, 1.3f);
+        moveTo(1);
+    }
+    public void moveGraph()
+    {
+        newCampos = new Vector3(1.5f, 2.4f, 1.3f);
+        moveTo(2);
+    }
+    public void moveStats()
+    {
+        newCampos = new Vector3(1.5f, 2.4f, -1.3f);
+        moveTo(4);
+    }
+
+
+
     public void moveTo(int i)
     {
         oldCampos = cam.transform.position;

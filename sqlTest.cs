@@ -104,6 +104,8 @@ public class sqlTest : MonoBehaviour
         cmnd_read.CommandText = query;
         reader = cmnd_read.ExecuteReader();
 
+        Controller.entries.Clear();
+
         while (reader.Read())
         {
             Entry newEntry = new Entry(new DateTime(1970, 1, 1).AddSeconds(Int32.Parse(reader[0].ToString())), float.Parse(reader[1].ToString()), reader[2].ToString());
@@ -111,6 +113,31 @@ public class sqlTest : MonoBehaviour
             newEntry.printEntry();
         }
         dbcon.Close();
+    }
+
+    public void delete(DateTime date)
+    {
+        string connection = "URI=file:" + Application.persistentDataPath + "/My_Database";
+        IDbConnection dbcon = new SqliteConnection(connection);
+        dbcon.Open();
+        IDbCommand dbcmd;
+        IDataReader reader;
+
+        IDbCommand cmnd = dbcon.CreateCommand();
+
+        int daysSince = (date - (new DateTime(2022, 1, 1).Date)).Days;
+        cmnd.CommandText = $"DELETE FROM maintable WHERE dateSince2022 = {daysSince}";
+        cmnd.ExecuteNonQuery();
+
+        read();
+        Debug.Log($"DELETE FROM maintable WHERE dateSince2022 = {daysSince}");
+
+        read();
+        Debug.Log("done");
+
+
+        dbcon.Close();
+
     }
 
 

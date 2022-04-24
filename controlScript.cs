@@ -109,13 +109,15 @@ public class controlScript : MonoBehaviour
 
         foreach (Entry e in entries)
         {
+
             if (e.getDateSince2022() == (date - (new DateTime(2022, 1, 1).Date)).Days)
             {
                 val = e.getVal();
                 notes = e.getNotes();
             }
         }
-        
+
+
         return (val, notes);
     }
 
@@ -129,7 +131,6 @@ public class controlScript : MonoBehaviour
     public void navBack()
     {
         selectedDate = selectedDate.Subtract(TimeSpan.FromDays(1));
-        Debug.Log(selectedDate.ToString());
         dayText.SetText(selectedDate.ToString("dddd dd"));
         monthText.SetText(selectedDate.ToString("MMMM"));
         valText.SetText(searchfor(selectedDate).Item1.ToString().Equals("0") ? "?" : searchfor(selectedDate).Item1.ToString());
@@ -139,7 +140,6 @@ public class controlScript : MonoBehaviour
     public void navForwards()
     {
         selectedDate = selectedDate.AddDays(1);
-        Debug.Log(selectedDate.ToString());
         dayText.SetText(selectedDate.ToString("dddd dd"));
         monthText.SetText(selectedDate.ToString("MMMM"));
         valText.SetText(searchfor(selectedDate).Item1.ToString().Equals("0") ? "?" : searchfor(selectedDate).Item1.ToString());
@@ -147,6 +147,15 @@ public class controlScript : MonoBehaviour
         slider.setValue((int)(searchfor(selectedDate).Item1*2f));
     }
 
+    public void deleteCurrent()
+    {
+        sqlscr.delete(selectedDate);
+        dayText.SetText(selectedDate.ToString("dddd dd"));
+        monthText.SetText(selectedDate.ToString("MMMM"));
+        valText.SetText(searchfor(selectedDate).Item1.ToString().Equals("0") ? "?" : searchfor(selectedDate).Item1.ToString());
+        notesText.text = (searchfor(selectedDate).Item2.ToString());
+        slider.setValue((int)(searchfor(selectedDate).Item1 * 2f));
+    }
 
 
 }

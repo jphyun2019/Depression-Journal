@@ -11,7 +11,19 @@ public class dayscr : MonoBehaviour
     public DateTime date;
     public int dayIntl;
     public Button butt;
+    public controlScript controller;
 
 
+    void Start()
+    {
+        Button btn = butt.GetComponent<Button>();
+        btn.onClick.AddListener(TaskOnClick);
+    }
+
+    void TaskOnClick()
+    {
+        controller.selectedDate = date;
+        controller.moveDay();
+    }
 
 }

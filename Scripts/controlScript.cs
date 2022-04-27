@@ -33,6 +33,9 @@ public class controlScript : MonoBehaviour
     public GameObject graphPage;
     public GameObject statsPage;
 
+    public dayscr[] days;
+    public TextMeshProUGUI calMonth;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -42,15 +45,17 @@ public class controlScript : MonoBehaviour
 
         newCampos = new Vector3(-1.5f, 2.4f, -1.3f);
         newCamrot = new Vector3(90, 0, 0);
-        moveTo(3);
+
+        dayPage.SetActive(true);
+        calPage.SetActive(false);
+        graphPage.SetActive(false);
+        statsPage.SetActive(false);
+
+
         newCamFOV = 60;
         sqlscr.sqlStart();
-
         selectedDate = DateTime.Now;
-        dayText.SetText(selectedDate.ToString("dddd dd"));
-        valText.SetText(searchfor(selectedDate).Item1.ToString());
-        notesText.text = (searchfor(selectedDate).Item2.ToString());
-        slider.setValue((int)(searchfor(selectedDate).Item1 * 2f));
+        moveDay();
 
 
     }
@@ -101,12 +106,20 @@ public class controlScript : MonoBehaviour
     public void moveDay()
     {
         newCampos = new Vector3(-1.5f, 2.4f, -1.3f);
+        dayText.SetText(selectedDate.ToString("dddd dd"));
+        monthText.SetText(selectedDate.ToString("MMMM"));
+        valText.SetText(searchfor(selectedDate).Item1.ToString().Equals("0") ? "?" : searchfor(selectedDate).Item1.ToString());
+        notesText.text = (searchfor(selectedDate).Item2.ToString());
+        slider.setValue((int)(searchfor(selectedDate).Item1 * 2f));
         moveTo(3);
+
     }
     public void moveCal()
     {
         newCampos = new Vector3(-1.5f, 2.4f, 1.3f);
         moveTo(1);
+        generateCal(selectedDate);
+
     }
     public void moveGraph()
     {
@@ -126,6 +139,7 @@ public class controlScript : MonoBehaviour
         oldCampos = cam.transform.position;
         animCounter = 20;
         mode = i;
+
     }
 
     public (float, string) searchfor(DateTime date)
@@ -185,5 +199,53 @@ public class controlScript : MonoBehaviour
         slider.setValue((int)(searchfor(selectedDate).Item1 * 2f));
     }
 
+    public void generateCal(DateTime seldate)
+    {
 
+        calMonth.text = seldate.ToString("MMMM");
+        int monthLen = DateTime.DaysInMonth(seldate.Year, seldate.Month);
+        string startingday = new DateTime(seldate.Year, seldate.Month, 1).ToString("ddd");
+
+        int startNum = 0;
+        switch (startingday)
+        {
+            case "Sun": startNum = 0; break;
+            case "Mon": startNum = 1; break;
+            case "Tue": startNum = 2; break;
+            case "Wed": startNum = 3; break;
+            case "Thu": startNum = 4; break;
+            case "Fri": startNum = 5; break;
+            case "Sat": startNum = 6; break;
+        }
+
+
+        for (int i = 0; i < 42; i++)
+        {
+            if (i < startNum)
+            {
+                days[i].date = new DateTime();
+                days[i].num.text = "";
+                days[i].dayIntl = 0;
+                days[i].butt.interactable = false;
+            }
+            else if (i < startNum + monthLen)
+            {
+                days[i].date = new DateTime(seldate.Year, seldate.Month, (i - startNum + 1));
+                days[i].num.text = (i - startNum + 1).ToString();
+                days[i].dayIntl = (i - startNum + 1);
+                days[i].butt.interactable = true;
+            }
+            else
+            {
+                days[i].date = new DateTime();
+                days[i].num.text = "";
+                days[i].dayIntl = 0;
+                days[i].butt.interactable = false;
+            }
+        }
+
+
+
+
+    }
 }

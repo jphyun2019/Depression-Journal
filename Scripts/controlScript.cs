@@ -19,6 +19,7 @@ public class controlScript : MonoBehaviour
 
 
     public DateTime selectedDate;
+    public DateTime monSelDate;
     public List<Entry> entries = new List<Entry>();
 
     public TextMeshProUGUI dayText;
@@ -35,6 +36,7 @@ public class controlScript : MonoBehaviour
 
     public dayscr[] days;
     public TextMeshProUGUI calMonth;
+    public TextMeshProUGUI calYear;
 
     // Start is called before the first frame update
     void Start()
@@ -118,7 +120,8 @@ public class controlScript : MonoBehaviour
     {
         newCampos = new Vector3(-1.5f, 2.4f, 1.3f);
         moveTo(1);
-        generateCal(selectedDate);
+        monSelDate = new DateTime(selectedDate.Year, selectedDate.Month, 1);
+        generateCal(monSelDate);
 
     }
     public void moveGraph()
@@ -188,6 +191,22 @@ public class controlScript : MonoBehaviour
         notesText.text = (searchfor(selectedDate).Item2.ToString());
         slider.setValue((int)(searchfor(selectedDate).Item1*2f));
     }
+    public void navMonBack()
+    {
+        monSelDate = monSelDate.AddMonths(-1);
+        generateCal(monSelDate);
+
+    }
+    public void navMonForwards()
+    {
+        monSelDate = monSelDate.AddMonths(1);
+        generateCal(monSelDate);
+
+    }
+
+
+
+
 
     public void deleteCurrent()
     {
@@ -201,7 +220,7 @@ public class controlScript : MonoBehaviour
 
     public void generateCal(DateTime seldate)
     {
-
+        calYear.text = seldate.ToString("yyy");
         calMonth.text = seldate.ToString("MMMM");
         int monthLen = DateTime.DaysInMonth(seldate.Year, seldate.Month);
         string startingday = new DateTime(seldate.Year, seldate.Month, 1).ToString("ddd");
@@ -230,9 +249,11 @@ public class controlScript : MonoBehaviour
             }
             else if (i < startNum + monthLen)
             {
+                
                 days[i].date = new DateTime(seldate.Year, seldate.Month, (i - startNum + 1));
                 days[i].num.text = (i - startNum + 1).ToString();
-                days[i].dayIntl = (i - startNum + 1);
+                days[i].dayIntl = searchfor(days[i].date).Item1;
+                days[i].updateColor();
                 days[i].butt.interactable = true;
             }
             else

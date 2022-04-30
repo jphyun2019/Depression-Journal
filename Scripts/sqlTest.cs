@@ -110,7 +110,7 @@ public class sqlTest : MonoBehaviour
         {
             Entry newEntry = new Entry(new DateTime(1970, 1, 1).AddSeconds(Int32.Parse(reader[0].ToString())), float.Parse(reader[1].ToString()), reader[2].ToString());
             Controller.entries.Add(newEntry);
-            newEntry.printEntry();
+            //newEntry.printEntry();
         }
         dbcon.Close();
     }

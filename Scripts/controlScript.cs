@@ -14,7 +14,7 @@ public class controlScript : MonoBehaviour
     public float newCamFOV;
     public Camera cam;
 
-    public int mode;
+    public int mode = 1;
     public int animCounter;
 
 
@@ -120,6 +120,8 @@ public class controlScript : MonoBehaviour
     }
     public void moveCal()
     {
+
+        selectedDate = DateTime.Now;
         newCampos = new Vector3(-1.5f, 2.4f, 1.3f);
         moveTo(1);
         monSelDate = new DateTime(selectedDate.Year, selectedDate.Month, 1);
@@ -130,7 +132,8 @@ public class controlScript : MonoBehaviour
     {
         newCampos = new Vector3(1.5f, 2.4f, 1.3f);
         sqlscr.read();
-        grapher.graph(1);
+        grapher.mode = 1;
+        grapher.graph();
         moveTo(2);
     }
     public void moveStats()
@@ -250,6 +253,7 @@ public class controlScript : MonoBehaviour
                 days[i].num.text = "";
                 days[i].dayIntl = 0;
                 days[i].butt.interactable = false;
+                days[i].im.color = new Color(1, 1, 1, 1);
             }
             else if (i < startNum + monthLen)
             {
@@ -266,6 +270,7 @@ public class controlScript : MonoBehaviour
                 days[i].num.text = "";
                 days[i].dayIntl = 0;
                 days[i].butt.interactable = false;
+                days[i].im.color = new Color(1, 1, 1, 1);
             }
         }
 

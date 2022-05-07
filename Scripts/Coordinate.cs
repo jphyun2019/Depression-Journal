@@ -4,18 +4,23 @@ using UnityEngine;
 
 public class Coordinate
 {
-    private float x;
+    private int x;
     private float y;
 
 
-    public Coordinate(float x, float y)
+    public Coordinate(int x, float y)
     {
         this.x = x;
         this.y = y;
     }
 
+    public void printCoord()
+    {
+        Debug.Log(x + "," + y);
+    }
 
-    public float getX()
+
+    public int getX()
     {
         return this.x;
     }
@@ -25,7 +30,7 @@ public class Coordinate
         return this.y;
     }
 
-    public void setX(float x)
+    public void setX(int x)
     {
         this.x = x;
     }

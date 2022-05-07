@@ -38,6 +38,8 @@ public class controlScript : MonoBehaviour
     public TextMeshProUGUI calMonth;
     public TextMeshProUGUI calYear;
 
+    public graphScr grapher;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -127,6 +129,8 @@ public class controlScript : MonoBehaviour
     public void moveGraph()
     {
         newCampos = new Vector3(1.5f, 2.4f, 1.3f);
+        sqlscr.read();
+        grapher.graph(1);
         moveTo(2);
     }
     public void moveStats()

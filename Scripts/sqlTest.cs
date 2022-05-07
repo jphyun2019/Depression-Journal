@@ -19,13 +19,13 @@ public class sqlTest : MonoBehaviour
         IDbCommand dbcmd;
         IDataReader reader;
 
-        dbcmd = dbcon.CreateCommand();
-        string droptable =
-          "DROP TABLE IF EXISTS maintable";
+        //dbcmd = dbcon.CreateCommand();
+        //string droptable =
+        //  "DROP TABLE IF EXISTS maintable";
 
-        dbcmd.CommandText = droptable;
-        reader = dbcmd.ExecuteReader();
-        Debug.Log("tabledeleted");
+        //dbcmd.CommandText = droptable;
+        //reader = dbcmd.ExecuteReader();
+        //Debug.Log("tabledeleted");
 
 
 

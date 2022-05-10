@@ -40,6 +40,8 @@ public class controlScript : MonoBehaviour
 
     public graphScr grapher;
 
+    public statscr stats;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -121,7 +123,7 @@ public class controlScript : MonoBehaviour
     public void moveCal()
     {
 
-        selectedDate = DateTime.Now;
+        //selectedDate = DateTime.Now;
         newCampos = new Vector3(-1.5f, 2.4f, 1.3f);
         moveTo(1);
         monSelDate = new DateTime(selectedDate.Year, selectedDate.Month, 1);
@@ -131,6 +133,8 @@ public class controlScript : MonoBehaviour
     public void moveGraph()
     {
         newCampos = new Vector3(1.5f, 2.4f, 1.3f);
+        grapher.leftButt.SetActive(false);
+        grapher.rightButt.SetActive(true);
         sqlscr.read();
         grapher.mode = 1;
         grapher.graph();
@@ -138,8 +142,13 @@ public class controlScript : MonoBehaviour
     }
     public void moveStats()
     {
+        sqlscr.read();
         newCampos = new Vector3(1.5f, 2.4f, -1.3f);
+        stats.leftbutt.SetActive(false);
+        stats.rightbutt.SetActive(true);
         moveTo(4);
+        stats.mode = 1;
+        stats.updateStats();
     }
 
 

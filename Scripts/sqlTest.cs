@@ -97,7 +97,16 @@ public class sqlTest : MonoBehaviour
         IDbCommand dbcmd;
         IDataReader reader;
 
+        IDbCommand cmnd = dbcon.CreateCommand();
+
+        cmnd.CommandText = $"DELETE FROM maintable WHERE val = 0";
+        cmnd.ExecuteNonQuery();
+
+
         IDbCommand cmnd_read = dbcon.CreateCommand();
+
+
+
 
         string query = "SELECT * FROM maintable";
 

@@ -27,6 +27,7 @@ Records Statistics
 ![image](https://user-images.githubusercontent.com/99457892/167716607-dbaacec6-d3d7-474c-9ee2-3a4a9ff828cc.png)
 ![image](https://user-images.githubusercontent.com/99457892/167716689-a9764a85-b039-4392-81db-3416eef8da2f.png)
 ![image](https://user-images.githubusercontent.com/99457892/167716832-ad8afa96-bf29-4800-a5b8-a131bb70fa16.png)
+![jonny5 logo](https://user-images.githubusercontent.com/99457892/167724047-20d51f9f-84d0-421f-af55-51249ddade01.png)
 
 
 Might make mobile eh?

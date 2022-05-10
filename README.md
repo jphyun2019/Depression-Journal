@@ -4,10 +4,10 @@
 Johns Creek High School
 Jonathan Hyun
 
--Unity
+-Unity 3D
 -Blender
 -Visual Studio
--C-sharp
+-C#
 -.NET
 -mySQL
 -SQLite
@@ -17,10 +17,18 @@ FULL STACK PROGRAMMER WOOOO
 
 Tracks Happiness/Mood each day.
 Stores value into SQL Database by date.
-Not sure what I'm gunna do next.
-But probably graphs and statistics and graphics and stuff.
+Graphs Trends
+Records Statistics
+![image](https://user-images.githubusercontent.com/99457892/167716449-6f90c2ef-27a9-4e2c-8cf9-dc1e5cb84fb6.png)
+![image](https://user-images.githubusercontent.com/99457892/167716607-dbaacec6-d3d7-474c-9ee2-3a4a9ff828cc.png)
+![image](https://user-images.githubusercontent.com/99457892/167716689-a9764a85-b039-4392-81db-3416eef8da2f.png)
+![image](https://user-images.githubusercontent.com/99457892/167716832-ad8afa96-bf29-4800-a5b8-a131bb70fa16.png)
+
 
 Might make mobile eh?
+
 Might ditch SQL cuz i hate it and just use jsons eh?
+
 Due by may 16th EHHHHH???
+
 may god help me

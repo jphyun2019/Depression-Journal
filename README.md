@@ -1,4 +1,4 @@
-# Depression Journal
+# Huge Victories (Depression Journal)
 2021-2022 CSA Master Project
 
 Johns Creek High School

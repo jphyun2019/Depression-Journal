@@ -43,11 +43,11 @@ public class dayscr : MonoBehaviour
                 red = 1f- 0.1f*(dayIntl-5f);
             }
 
-            im.color = new Color(red, green, 0.6f, 1);
+            im.color = new Color(red, green, 0.6f, 0.8f);
         }
         else
         {
-            im.color = new Color(1, 1, 1, 1);
+            im.color = new Color(1, 1, 1, 0.8f);
         }
 
 

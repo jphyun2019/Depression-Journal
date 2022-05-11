@@ -42,11 +42,36 @@ public class controlScript : MonoBehaviour
 
     public statscr stats;
 
+
+
+    public Light sun;
+    public GameObject logo;
+    public LogoScript logoscr;
+
+    private int logoanim = 0; 
+
+    public AudioSource musicPlayer;
+    public AudioClip[] dayMusic;
+    public AudioClip[] nightMusic;
+
+    private Queue<AudioClip> q = new Queue<AudioClip>();
+
+    private int dayq = 0;
+    private int nightq = 0;
+
     // Start is called before the first frame update
     void Start()
     {
         Application.targetFrameRate = 60;
         //newCampos = new Vector3(0, 6.5f, 0);
+
+        dayMusic = shuffle(dayMusic);
+        nightMusic = shuffle(nightMusic);
+
+
+        logo.SetActive(true);
+        logoscr.setOpacicty(1);
+        logoanim = 200;
 
 
         newCampos = new Vector3(-1.5f, 2.4f, -1.3f);
@@ -69,7 +94,80 @@ public class controlScript : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(animCounter > 0)
+        double percent = (double)Math.Abs(((DateTime.Now.Hour * 3600) + (DateTime.Now.Minute * 60) + DateTime.Now.Second) - 43200d) / 43200d;
+
+
+        double red = Mathf.Lerp(0.9568f, 0.3528f,(float)percent);
+        double blue = Mathf.Lerp(0.6588f, 0.0794f, (float)percent);
+        double green = Mathf.Lerp(0.6117f, 0.5849f, (float)percent);
+
+        sun.color = new Color((float)red, (float)blue, (float)green);
+        if (q.Count == 0)
+        {
+            if (percent < 0.5)
+            {
+                q.Enqueue(dayMusic[dayq]);
+                if (dayq == dayMusic.Length - 1)
+                {
+                    dayq = 0;
+                }
+                else
+                {
+                    dayq++;
+                }
+            }
+            else
+            {
+                q.Enqueue(nightMusic[nightq]);
+                if (nightq == nightMusic.Length - 1)
+                {
+                    nightq = 0;
+                }
+                else
+                {
+                    nightq++;
+                }
+            }
+        }
+
+        musicPlayer.UnPause();
+        if (musicPlayer.isPlaying == false)
+        {
+            musicPlayer.clip = q.Dequeue();
+            musicPlayer.Play();
+        }
+        if (q.Count == 0)
+        {
+            if(percent < 0.5)
+            {
+                q.Enqueue(dayMusic[dayq]);
+                if(dayq == dayMusic.Length - 1)
+                {
+                    dayq = 0;
+                }
+                else
+                {
+                    dayq++;
+                }
+            }
+            else
+            {
+                q.Enqueue(nightMusic[nightq]);
+                if (nightq == nightMusic.Length - 1)
+                {
+                    nightq = 0;
+                }
+                else
+                {
+                    nightq++;
+                }
+            }
+        }
+
+
+
+
+        if (animCounter > 0)
         {
             animCounter--;
         }
@@ -89,9 +187,7 @@ public class controlScript : MonoBehaviour
                 case 4:
                     statsPage.SetActive(true);
                     break;
-
             }
-
 
         }
         if (newCampos != cam.transform.position)
@@ -106,6 +202,44 @@ public class controlScript : MonoBehaviour
         {
             cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, newCamFOV, 0.05f);
         }
+
+        if (logoanim > 0)
+        {
+            logo.SetActive(true);
+            if (logoanim > 50)
+            {
+                if(logoanim > 150)
+                {
+                    logoscr.setBrightness(Mathf.Lerp(1, 0, (logoanim - 150f)/50f));
+                }
+            }
+            else
+            {
+                logoscr.setOpacicty(Mathf.Lerp(0, 1, (float)logoanim / 50f));
+            }
+            logoanim--;
+        }
+        else
+        {
+            logo.SetActive(false);
+        }
+
+
+    }
+
+
+    private AudioClip[] shuffle(AudioClip[] au)
+    {
+        int n = au.Length;
+        while (n > 1)
+        {
+            n--;
+            int k = UnityEngine.Random.Range(0, n+1);
+            AudioClip temp = au[k];
+            au[k] = au[n];
+            au[n] = temp;
+        }
+        return au;
 
     }
 

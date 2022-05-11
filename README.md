@@ -30,6 +30,4 @@ Records Statistics
 ![jonny5 logo](https://user-images.githubusercontent.com/99457892/167724047-20d51f9f-84d0-421f-af55-51249ddade01.png)
 
 Download:
-1. Download the folder titled "Huge Victories"
-2. Unzip the Folder in File Explorer
-3. Run the Executable, titled "Huge Victories"
+https://github.com/jphyun2019/Huge-Victories-Download

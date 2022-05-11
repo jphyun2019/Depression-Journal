@@ -29,11 +29,7 @@ Records Statistics
 ![image](https://user-images.githubusercontent.com/99457892/167716832-ad8afa96-bf29-4800-a5b8-a131bb70fa16.png)
 ![jonny5 logo](https://user-images.githubusercontent.com/99457892/167724047-20d51f9f-84d0-421f-af55-51249ddade01.png)
 
-
-Might make mobile eh?
-
-Might ditch SQL cuz i hate it and just use jsons eh?
-
-Due by may 16th EHHHHH???
-
-may god help me
+Download:
+1. Download the folder titled "Huge Victories"
+2. Unzip the Folder in File Explorer
+3. Run the Executable, titled "Huge Victories"

@@ -8,28 +8,43 @@ using TMPro;
 public class graphScr : MonoBehaviour
 {
 
+    // Pen Object
     public GameObject pen;
+    // Pen Trail Renderer
     public TrailRenderer pentrail;
+    // Main Control Script
     public controlScript main;
 
+    // List of Coordinate Objects
     public List<Coordinate> points = new List<Coordinate>();
+
+    // Graphing Animation Frame
     int anim = 0;
+    // Final Animation Frame
     int totalanim = 0;
+    // Buffer Frames before graphing starts
     int bufferFrames = 0;
 
 
-
+    // X and Y value of pen
     public float x;
     public float y;
 
+    // Mode Text Box
     public TextMeshProUGUI modeText;
+
+    // Navigation Buttons
     public GameObject leftButt;
     public GameObject rightButt;
 
+    // Current Mode
     public int mode = 1;
+    // Origin of Graph
     public GameObject origin;
 
+    // Array of extra lines
     public GameObject[] extralines;
+    // Array of Date Text boxes
     public TextMeshProUGUI[] dateTexts;
 
 
@@ -38,6 +53,7 @@ public class graphScr : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         mode = 1;
         leftButt.SetActive(false);
         rightButt.SetActive(true);
@@ -46,102 +62,124 @@ public class graphScr : MonoBehaviour
     }
 
 
+    // Accesses draw method and sets parameters
     public void graph()
     {
-
-
-
-
+        // Switches based off mode
         switch (mode)
         {
             case 1:
+                // Calls draw function with 11,1
                 foreach(GameObject g in extralines) { g.SetActive(false); }
                 origin.transform.localScale = new Vector3(1, 1, 1);
                 draw(11, 1);
                 break;
 
             case 2:
+                // Calls draw function with 11,3
                 foreach (GameObject g in extralines) { g.SetActive(false); }
                 origin.transform.localScale = new Vector3(1, 1, 1);
                 draw(11, 3);
                 break;
 
             case 3:
+                // Calls draw function with 21,5
+                // Also renders extra lines
                 foreach (GameObject g in extralines) { g.SetActive(true); }
                 origin.transform.localScale = new Vector3(0.5f, 1, 1);
                 draw(21, 5);
                 break;
+            case 4:
+                // Calls draw function with 41,10
+                // Also renders extra lines
+                foreach (GameObject g in extralines) { g.SetActive(true); }
 
+                origin.transform.localScale = new Vector3((0.4f), 1, 1);
+                draw(26, 8);
+                break;
+            case 5:
+                // Calls draw function with 41,10
+                // Also renders extra lines
+                foreach (GameObject g in extralines) { g.SetActive(true); }
+
+                origin.transform.localScale = new Vector3((0.25f), 1, 1);
+                draw(41, 10);
+                break;
         }
     }
 
+    // Draws the graph
     private void draw(int pointCount, int groupSize)
     {
+        // Clears graph
         pentrail.emitting = false;
         points.Clear();
 
         DateTime temp = DateTime.Now;
 
+        // Sets the x-axis dates
         for(int i = 0; i < 4; i++)
         {
             dateTexts[i].SetText(temp.AddDays(-groupSize * 2f*(i+1) * (((float)pointCount-1f)/10f)).ToString("M/d"));
         }
         
-
-
+        // Sets the mode text
         modeText.SetText(((pointCount - 1)*groupSize) + " days");
 
 
+        // For each keyframe location
         for(int i = 0; i < pointCount; i ++)
         {
             float total = 0;
             int counter = 0;
             
-
+            // For all dates entries within each location
             for(int j = 0; j < groupSize; j++)
             {
+                // If the date entry has a value
                 if (!(main.searchfor(temp).Item1 == 0))
                 {
+                    // Add up the values
                     total += main.searchfor(temp).Item1;
                     counter++;
                 }
                 temp = temp.AddDays(-1);
             }
 
+            // Finds the average of the values and creates a Coordinate object
             if(counter > 0)
             {
                 float average = total / counter;
                 points.Add(new Coordinate(i, average));
 
-
-
             }
-
         }
         
+        // For each coordinate
         foreach (Coordinate c in points)
         {
             c.printCoord();
         }
 
+        // If there are coordinates
         pentrail.emitting = false;
-        pen.transform.localPosition = new Vector3(points[0].getX(), 0, points[0].getY());
-        pentrail.emitting = false;
+        if(points.Count > 0)
+        {
+            // Moves the pen to the first coordinate
+            pen.transform.localPosition = new Vector3(points[0].getX(), 0, points[0].getY());
+            pentrail.emitting = false;
 
 
-        anim = 0;
-        totalanim = (points.Count-1) * 10;
-        bufferFrames = 10;
+            anim = 0;
+            totalanim = (points.Count - 1) * 10;
+            bufferFrames = 10;
 
-        pentrail.Clear();
-
-        //points.Add(new Coordinate(-1, 5));
-        //points.Add(new Coordinate(11, 5));
-
-
+            pentrail.Clear();
+        }
 
     }
 
+    // Lagrange Formulas
     public static float GetValue(List<Coordinate> controlPoints, float x)
     {
         var result = 0.0f;
@@ -173,28 +211,31 @@ public class graphScr : MonoBehaviour
     void FixedUpdate()
     {
 
-
+        // If it is animating
         if (anim < totalanim)
         {
+            // If it finished buffering to let pen clear
             if(bufferFrames == 0)
             {
                 Debug.Log(points[(int)(anim / 10)].getX());
                 Debug.Log(points[(int)(anim / 10)].getY());
                 Debug.Log(((float)anim % 10f) / 10f);
 
+                // Set x and y values between coordinate points based off animation frame
                 x = Mathf.Lerp(points[(int)(anim / 10)].getX(), points[(int)(anim / 10) + 1].getX(), ((float)anim % 10f) / 10f);
 
                 y = Mathf.Lerp(points[(int)(anim / 10)].getY(), points[(int)(anim / 10) + 1].getY(), ((float)anim % 10f) / 10f);
 
 
+                // Moves the pen to the location
                 pentrail.emitting = true;
                 pen.transform.localPosition = new Vector3(x, 0, y);
-
 
                 anim++;
             }
             else
             {
+                // Move the pen to the origin
                 pen.transform.localPosition = new Vector3(points[0].getX(), 0, points[0].getY());
                 bufferFrames--;
             }
@@ -208,13 +249,14 @@ public class graphScr : MonoBehaviour
 
     }
 
+    // Navigating to a larger mode
     public void moveRight()
     {
 
         leftButt.SetActive(true);
         mode++;
         graph();
-        if(mode == 3)
+        if(mode == 5)
         {
             rightButt.SetActive(false);
         }
@@ -222,6 +264,7 @@ public class graphScr : MonoBehaviour
 
     }
     
+    // Navigating to a smaller mdoe
     public void moveLeft()
     {
 
@@ -232,11 +275,6 @@ public class graphScr : MonoBehaviour
         {
             leftButt.SetActive(false);
         }
-
-
     }
-
-
-
 
 }

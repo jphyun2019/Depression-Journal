@@ -46,8 +46,7 @@ public class sqlTest : MonoBehaviour
         string connection = "URI=file:" + Application.persistentDataPath + "/My_Database";
         IDbConnection dbcon = new SqliteConnection(connection);
         dbcon.Open();
-        IDbCommand dbcmd;
-        IDataReader reader;
+
 
         IDbCommand cmnd = dbcon.CreateCommand();
 
@@ -55,11 +54,13 @@ public class sqlTest : MonoBehaviour
         // Acts as Update at the same time
         int daysSince = (date - (new DateTime(2022, 1, 1).Date)).Days;
         cmnd.CommandText = $"DELETE FROM maintable WHERE dateSince2022 = {daysSince}";
+        Debug.Log("adding: " + date + " day: " + daysSince + " value: " + val);
         cmnd.ExecuteNonQuery();
 
 
         // Inserts the entry into the database
-        cmnd.CommandText = $"INSERT INTO maintable (date, val, notes, dateSince2022) VALUES ({((DateTimeOffset)date).ToUnixTimeSeconds() - 14400}, {val}, '{notes}', {daysSince})";
+        cmnd.CommandText = $"INSERT INTO maintable (date, val, notes, dateSince2022) VALUES ({((DateTimeOffset)date).ToUnixTimeSeconds() - 18000}, {val}, '{notes}', {daysSince})";
+        Debug.Log("unix: " + (((DateTimeOffset)date).ToUnixTimeSeconds() - 18000));
         cmnd.ExecuteNonQuery();
         dbcon.Close();
 
@@ -72,8 +73,7 @@ public class sqlTest : MonoBehaviour
         string connection = "URI=file:" + Application.persistentDataPath + "/My_Database";
         IDbConnection dbcon = new SqliteConnection(connection);
         dbcon.Open();
-        IDbCommand dbcmd;
-        IDataReader reader;
+
 
         IDbCommand cmnd = dbcon.CreateCommand();
 
@@ -95,7 +95,7 @@ public class sqlTest : MonoBehaviour
         string connection = "URI=file:" + Application.persistentDataPath + "/My_Database";
         IDbConnection dbcon = new SqliteConnection(connection);
         dbcon.Open();
-        IDbCommand dbcmd;
+
         IDataReader reader;
 
         IDbCommand cmnd = dbcon.CreateCommand();
@@ -134,9 +134,7 @@ public class sqlTest : MonoBehaviour
         // Connects to the table
         string connection = "URI=file:" + Application.persistentDataPath + "/My_Database";
         IDbConnection dbcon = new SqliteConnection(connection);
-        dbcon.Open();
-        IDbCommand dbcmd;
-        IDataReader reader;
+        dbcon.Open();        
 
         IDbCommand cmnd = dbcon.CreateCommand();
 
@@ -147,10 +145,10 @@ public class sqlTest : MonoBehaviour
         cmnd.ExecuteNonQuery();
 
         read();
-        Debug.Log($"DELETE FROM maintable WHERE dateSince2022 = {daysSince}");
+        Debug.Log("Delete: " + date + " days: " + daysSince);
 
         read();
-        Debug.Log("done");
+
 
         dbcon.Close();
 

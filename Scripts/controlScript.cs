@@ -127,7 +127,7 @@ public class controlScript : MonoBehaviour
         graphPage.SetActive(false);
         statsPage.SetActive(false);
 
-
+        selectedDate = DateTime.Now;
         // Starts the connection and setup scripts for the sql script
         sqlscr.sqlStart();
 
@@ -297,31 +297,7 @@ public class controlScript : MonoBehaviour
 
     }
 
-    public void dream()
-    {
-        if (dreaming)
-        {
-            dayq = 0;
-            nightq = 0;
-            dayMusic = new AudioClip[8];
-            nightMusic = new AudioClip[9];
-            dayMusic = shuffle(dayplaylist);
-            nightMusic = shuffle(nightplaylist);
-            q.Clear();
-            musicPlayer.Stop();
-            dreaming = false;
-        }
-        else
-        {
-            dayMusic = new AudioClip[4];
-            nightMusic = new AudioClip[4];
-            dayMusic = shuffle(dreamplaylist);
-            nightMusic = shuffle(dreamplaylist);
-            q.Clear();
-            musicPlayer.Stop();
-            dreaming = true;
-        }
-    }
+
 
 
     // Method called when navigating to the day page
@@ -336,7 +312,7 @@ public class controlScript : MonoBehaviour
         valText.SetText(searchfor(selectedDate).Item1.ToString().Equals("0") ? "?" : searchfor(selectedDate).Item1.ToString());
         notesText.text = (searchfor(selectedDate).Item2.ToString());
         slider.setValue((int)(searchfor(selectedDate).Item1 * 2f));
-
+        Debug.Log("move to: "  + selectedDate);
         // Starts animation method
         moveTo(3);
 
@@ -414,7 +390,7 @@ public class controlScript : MonoBehaviour
     // Returns default values if it does not exist in the database
     public (float, string) searchfor(DateTime date)
     {
-
+        Debug.Log("Search for: " + date);
         // Reads the sql table into the entries list
         sqlscr.read();
 
@@ -433,6 +409,7 @@ public class controlScript : MonoBehaviour
                 // Sets the values to match the date in the database
                 val = e.getVal();
                 notes = e.getNotes();
+                e.printEntry();
             }
         }
 
@@ -446,6 +423,9 @@ public class controlScript : MonoBehaviour
     {
 
         // Calles the add method sql which adds the new date to the database
+
+        Debug.Log("Adding: "+ selectedDate + " Value: " + slider.getValue());
+
         sqlscr.add(selectedDate, slider.getValue(), notesText.text);
 
         // Updates textboxes to match the new data

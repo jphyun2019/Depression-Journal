@@ -84,6 +84,13 @@ public class statscr : MonoBehaviour
                 }
                 range.SetText("200 days");
                 break;
+            case 5:
+                if (controller.entries.Count > 0)
+                {
+                    writeStats(400);
+                }
+                range.SetText("400 days");
+                break;
 
 
         }
@@ -243,11 +250,11 @@ public class statscr : MonoBehaviour
 
                 if ((totals[counter] / (float)counters[counter]) < 5)
                 {
-                    green = 0.5f + 0.1f * (totals[counter] / (float)counters[counter]);
+                    green = 0.5f + 0.25f * (totals[counter] / (float)counters[counter]);
                 }
                 else if ((totals[counter] / (float)counters[counter]) > 5)
                 {
-                    red = 1f - 0.1f * ((totals[counter] / (float)counters[counter]) - 5f);
+                    red = 1f - 0.25f * ((totals[counter] / (float)counters[counter]) - 5f);
                 }
 
                 s.image.color = new Color(red, green, 0.6f, 1);
@@ -273,7 +280,7 @@ public class statscr : MonoBehaviour
         leftbutt.SetActive(true);
         mode++;
         updateStats();
-        if (mode == 4)
+        if (mode == 5)
         {
             rightbutt.SetActive(false);
         }

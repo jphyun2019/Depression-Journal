@@ -39,7 +39,7 @@ public class Entry
     // Prints the class object
     public void printEntry()
     {
-        Debug.Log($"Date: {this.date.ToString("MM/dd/yyyy")}, Value: {this.val}, Notes: {this.notes}, Days Since 2022: {dateSince2022}");
+        Debug.Log($"Date: {this.date.ToString()}, Value: {this.val}, Notes: {this.notes}, Days Since 2022: {dateSince2022}");
     }
 
 

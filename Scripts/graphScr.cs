@@ -46,6 +46,7 @@ public class graphScr : MonoBehaviour
     public GameObject[] extralines;
     // Array of Date Text boxes
     public TextMeshProUGUI[] dateTexts;
+    public GameObject[] extradates;
 
 
 
@@ -71,6 +72,7 @@ public class graphScr : MonoBehaviour
             case 1:
                 // Calls draw function with 11,1
                 foreach(GameObject g in extralines) { g.SetActive(false); }
+                foreach (GameObject g in extradates) { g.SetActive(false); }
                 origin.transform.localScale = new Vector3(1, 1, 1);
                 draw(11, 1);
                 break;
@@ -78,6 +80,7 @@ public class graphScr : MonoBehaviour
             case 2:
                 // Calls draw function with 11,3
                 foreach (GameObject g in extralines) { g.SetActive(false); }
+                foreach (GameObject g in extradates) { g.SetActive(false); }
                 origin.transform.localScale = new Vector3(1, 1, 1);
                 draw(11, 3);
                 break;
@@ -86,6 +89,7 @@ public class graphScr : MonoBehaviour
                 // Calls draw function with 21,5
                 // Also renders extra lines
                 foreach (GameObject g in extralines) { g.SetActive(true); }
+                foreach (GameObject g in extradates) { g.SetActive(true); }
                 origin.transform.localScale = new Vector3(0.5f, 1, 1);
                 draw(21, 5);
                 break;
@@ -93,6 +97,7 @@ public class graphScr : MonoBehaviour
                 // Calls draw function with 41,10
                 // Also renders extra lines
                 foreach (GameObject g in extralines) { g.SetActive(true); }
+                foreach (GameObject g in extradates) { g.SetActive(true); }
 
                 origin.transform.localScale = new Vector3((0.4f), 1, 1);
                 draw(26, 8);
@@ -101,6 +106,7 @@ public class graphScr : MonoBehaviour
                 // Calls draw function with 41,10
                 // Also renders extra lines
                 foreach (GameObject g in extralines) { g.SetActive(true); }
+                foreach (GameObject g in extradates) { g.SetActive(true); }
 
                 origin.transform.localScale = new Vector3((0.25f), 1, 1);
                 draw(41, 10);
@@ -118,9 +124,9 @@ public class graphScr : MonoBehaviour
         DateTime temp = DateTime.Now;
 
         // Sets the x-axis dates
-        for(int i = 0; i < 4; i++)
+        for(int i = 0; i < 9; i++)
         {
-            dateTexts[i].SetText(temp.AddDays(-groupSize * 2f*(i+1) * (((float)pointCount-1f)/10f)).ToString("M/d"));
+            dateTexts[i].SetText(temp.AddDays(-groupSize * 1f*(i+1) * (((float)pointCount-1f)/10f)).ToString("M/d"));
         }
         
         // Sets the mode text

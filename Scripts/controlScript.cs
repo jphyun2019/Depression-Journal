@@ -103,6 +103,7 @@ public class controlScript : MonoBehaviour
     void Start()
     {
 
+
         dreaming = false;
         // Sets the overall max-frame-rate of the renderer
         Application.targetFrameRate = 60;
@@ -133,6 +134,9 @@ public class controlScript : MonoBehaviour
 
         // Sets the selected date as the current date
         selectedDate = DateTime.Now;
+
+        Debug.Log(((DateTimeOffset)selectedDate).ToUnixTimeSeconds());
+        Debug.Log(selectedDate.Hour);
 
         // Moves to the day page position
         moveDay();
@@ -409,7 +413,9 @@ public class controlScript : MonoBehaviour
                 // Sets the values to match the date in the database
                 val = e.getVal();
                 notes = e.getNotes();
+                
                 e.printEntry();
+                return (val, notes);
             }
         }
 

@@ -91,6 +91,13 @@ public class statscr : MonoBehaviour
                 }
                 range.SetText("400 days");
                 break;
+            case 6:
+                if (controller.entries.Count > 0)
+                {
+                    writeStats(800);
+                }
+                range.SetText("800 days");
+                break;
 
 
         }
@@ -184,12 +191,12 @@ public class statscr : MonoBehaviour
             bestday.date = bes.getDate();
             bestday.dayIntl = bes.getVal();
             bestday.updateColor();
-            bestday.num.SetText(bes.getDate().ToString("M/d") + " (" + bes.getVal() + ")" + (bes.getNotes().Equals("") ? "" : "*"));
+            bestday.num.SetText(bes.getDate().ToString("M/d/y") + " (" + bes.getVal() + ")" + (bes.getNotes().Equals("") ? "" : "*"));
 
             worstday.date = wor.getDate();
             worstday.dayIntl = wor.getVal();
             worstday.updateColor();
-            worstday.num.SetText(wor.getDate().ToString("M/d") + " (" + wor.getVal() + ")" + (wor.getNotes().Equals("") ? "" : "*"));
+            worstday.num.SetText(wor.getDate().ToString("M/d/y") + " (" + wor.getVal() + ")" + (wor.getNotes().Equals("") ? "" : "*"));
         }
 
     }
@@ -280,7 +287,7 @@ public class statscr : MonoBehaviour
         leftbutt.SetActive(true);
         mode++;
         updateStats();
-        if (mode == 5)
+        if (mode == 6)
         {
             rightbutt.SetActive(false);
         }

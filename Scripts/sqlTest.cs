@@ -59,8 +59,12 @@ public class sqlTest : MonoBehaviour
 
 
         // Inserts the entry into the database
-        cmnd.CommandText = $"INSERT INTO maintable (date, val, notes, dateSince2022) VALUES ({((DateTimeOffset)date).ToUnixTimeSeconds() - 18000}, {val}, '{notes}', {daysSince})";
-        Debug.Log("unix: " + (((DateTimeOffset)date).ToUnixTimeSeconds() - 18000));
+
+
+        bool isDaylightSaving = date.IsDaylightSavingTime();
+        
+        cmnd.CommandText = $"INSERT INTO maintable (date, val, notes, dateSince2022) VALUES ({((DateTimeOffset)date).ToUnixTimeSeconds() - (isDaylightSaving? 14400 : 18000)}, {val}, '{notes}', {daysSince})";
+        Debug.Log("unix: " + (((DateTimeOffset)date).ToUnixTimeSeconds() - (isDaylightSaving ? 14400 : 18000)));
         cmnd.ExecuteNonQuery();
         dbcon.Close();
 

@@ -48,7 +48,7 @@ public class graphScr : MonoBehaviour
     public TextMeshProUGUI[] dateTexts;
     public GameObject[] extradates;
 
-
+    public float renderSpeed;
 
 
     // Start is called before the first frame update
@@ -81,8 +81,8 @@ public class graphScr : MonoBehaviour
                 // Calls draw function with 11,3
                 foreach (GameObject g in extralines) { g.SetActive(false); }
                 foreach (GameObject g in extradates) { g.SetActive(false); }
-                origin.transform.localScale = new Vector3(1, 1, 1);
-                draw(11, 3);
+                origin.transform.localScale = new Vector3(0.666667f, 1, 1);
+                draw(16, 2);
                 break;
 
             case 3:
@@ -110,6 +110,15 @@ public class graphScr : MonoBehaviour
 
                 origin.transform.localScale = new Vector3((0.25f), 1, 1);
                 draw(41, 10);
+                break;
+            case 6:
+                // Calls draw function with 41,10
+                // Also renders extra lines
+                foreach (GameObject g in extralines) { g.SetActive(true); }
+                foreach (GameObject g in extradates) { g.SetActive(true); }
+
+                origin.transform.localScale = new Vector3((0.2f), 1, 1);
+                draw(51, 16);
                 break;
         }
     }
@@ -143,10 +152,11 @@ public class graphScr : MonoBehaviour
             for(int j = 0; j < groupSize; j++)
             {
                 // If the date entry has a value
-                if (!(main.searchfor(temp).Item1 == 0))
+                float dval = main.searchfor(temp).Item1;
+                if (dval != 0)
                 {
                     // Add up the values
-                    total += main.searchfor(temp).Item1;
+                    total += dval;
                     counter++;
                 }
                 temp = temp.AddDays(-1);
@@ -223,14 +233,16 @@ public class graphScr : MonoBehaviour
             // If it finished buffering to let pen clear
             if(bufferFrames == 0)
             {
-                Debug.Log(points[(int)(anim / 10)].getX());
-                Debug.Log(points[(int)(anim / 10)].getY());
-                Debug.Log(((float)anim % 10f) / 10f);
+                
+
+                Debug.Log(points[(int)(anim / renderSpeed)].getX());
+                Debug.Log(points[(int)(anim / renderSpeed)].getY());
+                Debug.Log(((float)anim % renderSpeed) / renderSpeed);
 
                 // Set x and y values between coordinate points based off animation frame
-                x = Mathf.Lerp(points[(int)(anim / 10)].getX(), points[(int)(anim / 10) + 1].getX(), ((float)anim % 10f) / 10f);
+                x = Mathf.Lerp(points[(int)(anim / renderSpeed)].getX(), points[(int)(anim / renderSpeed) + 1].getX(), ((float)anim % renderSpeed) / renderSpeed);
 
-                y = Mathf.Lerp(points[(int)(anim / 10)].getY(), points[(int)(anim / 10) + 1].getY(), ((float)anim % 10f) / 10f);
+                y = Mathf.Lerp(points[(int)(anim / renderSpeed)].getY(), points[(int)(anim / renderSpeed) + 1].getY(), ((float)anim % renderSpeed) / renderSpeed);
 
 
                 // Moves the pen to the location
@@ -262,7 +274,7 @@ public class graphScr : MonoBehaviour
         leftButt.SetActive(true);
         mode++;
         graph();
-        if(mode == 5)
+        if(mode == 6)
         {
             rightButt.SetActive(false);
         }

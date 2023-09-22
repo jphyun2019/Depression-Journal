@@ -12,8 +12,6 @@ Jonathan Hyun
 -mySQL
 -SQLite
 
-FULLY CRUD
-FULL STACK PROGRAMMER WOOOO
 
 Tracks Happiness/Mood each day.
 
